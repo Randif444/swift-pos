@@ -1,65 +1,171 @@
-import Image from "next/image";
+"use client";
+
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import LoginForm from "./login/LoginForm";
+import RegisterForm from "./register/RegisterForm";
+import InviteForm from "./register/InviteForm";
+
+const easing: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 export default function Home() {
+  const [mode, setMode] = useState<"none" | "login" | "register" | "invite">(
+    "none",
+  );
+
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const checkSize = () => setIsDesktop(window.innerWidth >= 768);
+    checkSize();
+    window.addEventListener("resize", checkSize);
+    return () => window.removeEventListener("resize", checkSize);
+  }, []);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="min-h-screen bg-white overflow-x-hidden">
+      <div className="w-full h-screen grid grid-cols-1 md:grid-cols-2">
+        <div className="bg-gradient-to-br from-slate-900 to-slate-950 text-white px-8 md:px-20 py-8 md:py-20 flex flex-col h-[100dvh] md:h-full relative overflow-hidden">
+          <div className="relative z-[60] inline-block px-4 py-1.5 bg-white/10 rounded-full text-[10px] md:text-xs font-black tracking-widest uppercase self-start">
+            Swift POS
+          </div>
+
+          <div className="relative z-10 flex-1 flex flex-col justify-center">
+            <h1 className="text-4xl md:text-5xl font-black tracking-tighter leading-[1.05]">
+              Manage.
+              <br />
+              Track.
+              <br />
+              Grow.
+            </h1>
+            <p className="mt-5 md:mt-8 text-sm text-slate-300 max-w-[260px] md:max-w-sm font-medium leading-relaxed">
+              Modern POS and inventory management system for growing retail
+              businesses.
+            </p>
+
+            <div className="mt-8 md:mt-10 flex flex-col gap-5">
+              <div className="flex flex-row gap-3 md:gap-5">
+                <button
+                  onClick={() => setMode("register")}
+                  className="px-5 md:px-7 py-3 md:py-3.5 rounded-xl bg-white text-slate-900 font-bold text-sm transition-all duration-300 hover:scale-[1.02] active:scale-95 flex-1 md:flex-none"
+                >
+                  Open Store
+                </button>
+                <button
+                  onClick={() => setMode("invite")}
+                  className="px-5 md:px-7 py-3 md:py-3.5 rounded-xl border border-white/30 text-white font-bold text-sm transition-all duration-300 hover:bg-white/10 active:scale-95 flex-1 md:flex-none"
+                >
+                  Join Staff
+                </button>
+              </div>
+              <div>
+                <button
+                  onClick={() => setMode("login")}
+                  className="text-sm font-bold text-slate-300 hover:text-white transition-colors flex items-center gap-2"
+                >
+                  Sign in to your account →
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="relative z-10 mt-auto md:mt-0 pt-6">
+            <p className="text-[10px] md:text-xs text-slate-500 font-medium">
+              © 2026 Swift POS
+            </p>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        <div
+          className={`
+            overflow-hidden h-[100dvh] md:h-full
+            ${mode !== "none" ? "fixed inset-0 z-[100] bg-black/20 md:bg-slate-50 md:relative md:inset-auto" : "relative hidden md:flex bg-slate-50"}
+            md:relative md:z-20
+          `}
+          onClick={() => !isDesktop && mode !== "none" && setMode("none")}
+        >
+          <div className="absolute left-0 top-0 h-full w-40 pointer-events-none hidden md:block z-10">
+            <div className="absolute inset-0 bg-gradient-to-r from-slate-900/20 via-slate-900/5 to-transparent" />
+          </div>
+
+          <AnimatePresence mode="wait">
+            {mode === "none" && isDesktop && (
+              <motion.div
+                key="value"
+                initial={{ opacity: 0, x: 60 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -60 }}
+                transition={{ duration: 0.45, ease: easing }}
+                className="h-full flex flex-col justify-center px-24 relative z-10"
+              >
+                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-6">
+                  WHY SWIFT POS
+                </p>
+                <h2 className="text-4xl font-black tracking-tighter text-slate-900 leading-tight">
+                  Built for Modern Retail.
+                </h2>
+                <p className="mt-6 text-sm font-medium text-slate-500 max-w-md">
+                  Everything you need to run, monitor, and grow your store in
+                  one powerful platform.
+                </p>
+              </motion.div>
+            )}
+
+            {mode !== "none" && (
+              <motion.div
+                key={mode}
+                initial={isDesktop ? { x: 80, opacity: 0 } : { y: "100%" }}
+                animate={isDesktop ? { x: 0, opacity: 1 } : { y: 0 }}
+                exit={isDesktop ? { x: 80, opacity: 0 } : { y: "100%" }}
+                transition={{ duration: 0.5, ease: easing }}
+                drag={isDesktop ? false : "y"}
+                dragConstraints={{ top: 0, bottom: 0 }}
+                dragElastic={0.2}
+                onDragEnd={(_, info) => {
+                  if (info.offset.y > 100) setMode("none");
+                }}
+                onClick={(e) => e.stopPropagation()}
+                className={`
+                  absolute md:inset-0 md:bg-transparent flex flex-col z-[110] outline-none
+                  ${!isDesktop ? "inset-x-0 bottom-0 top-20 bg-white rounded-t-[32px] shadow-[0_-20px_60px_rgba(0,0,0,0.5)]" : "bg-white"}
+                `}
+              >
+                <div className="w-full flex justify-center pt-4 pb-2 md:hidden">
+                  <div className="w-12 h-1.5 bg-slate-200 rounded-full" />
+                </div>
+
+                <div className="w-full h-full flex items-center justify-center px-6 md:px-32">
+                  <div className="w-full max-w-md py-6 md:py-0 overflow-y-auto max-h-full pb-20">
+                    <div className="md:hidden mb-10">
+                      <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">
+                        WHY SWIFT POS
+                      </p>
+                      <h2 className="text-3xl font-black tracking-tighter text-slate-900 leading-tight">
+                        Built for Modern Retail.
+                      </h2>
+                      <p className="mt-3 text-sm font-medium text-slate-500 leading-relaxed">
+                        Everything you need to run, monitor, and grow your store
+                        in one powerful platform.
+                      </p>
+                    </div>
+
+                    {/* REVISI: Mengembalikan onBack agar tombol kembali bisa menutup modal di layar ini */}
+                    {mode === "login" && (
+                      <LoginForm onBack={() => setMode("none")} />
+                    )}
+                    {mode === "register" && (
+                      <RegisterForm onBack={() => setMode("none")} />
+                    )}
+                    {mode === "invite" && (
+                      <InviteForm onBack={() => setMode("none")} />
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
-      </main>
-    </div>
+      </div>
+    </main>
   );
 }
