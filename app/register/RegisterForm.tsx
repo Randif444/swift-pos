@@ -49,10 +49,10 @@ function RegisterFormInner({ onBack }: { onBack?: () => void }) {
   return (
     <div className="space-y-6 md:space-y-8">
       <div className="space-y-1">
-        <h2 className="text-2xl md:text-3xl font-black tracking-tighter text-slate-900 uppercase">
+        <h2 className="text-2xl md:text-3xl font-black tracking-tighter text-slate-900 uppercase text-center md:text-left">
           {isInvited ? "Join Store" : "Open Store"}
         </h2>
-        <p className="text-xs md:text-sm text-slate-500 font-medium">
+        <p className="text-xs md:text-sm text-slate-500 font-medium text-center md:text-left">
           {isInvited
             ? "Complete your profile to start working"
             : "Start managing your business in minutes"}

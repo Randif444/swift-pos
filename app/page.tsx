@@ -22,7 +22,6 @@ export default function Home() {
     return () => window.removeEventListener("resize", checkSize);
   }, []);
 
-  // REVISI: Mengunci scroll body agar tidak "bocor" saat modal terbuka
   useEffect(() => {
     if (mode !== "none" && !isDesktop) {
       document.body.style.overflow = "hidden";
@@ -35,7 +34,6 @@ export default function Home() {
   }, [mode, isDesktop]);
 
   return (
-    // REVISI: Menggunakan min-h-[100dvh] agar pas di layar HP (menghilangkan area putih)
     <main className="min-h-[100dvh] bg-white overflow-hidden flex flex-col">
       <div className="w-full flex-1 grid grid-cols-1 md:grid-cols-2">
         <div className="bg-gradient-to-br from-slate-900 to-slate-950 text-white px-8 md:px-20 py-8 md:py-20 flex flex-col h-[100dvh] md:h-full relative overflow-hidden shrink-0">
@@ -143,11 +141,12 @@ export default function Home() {
                   ${!isDesktop ? "inset-x-0 bottom-0 top-20 bg-white rounded-t-[32px] shadow-[0_-20px_60px_rgba(0,0,0,0.5)]" : "bg-white"}
                 `}
               >
-                <div className="w-full flex justify-center pt-4 pb-2 md:hidden">
+                <div className="w-full flex justify-center pt-4 pb-2 md:hidden shrink-0">
                   <div className="w-12 h-1.5 bg-slate-200 rounded-full" />
                 </div>
 
-                <div className="md:hidden w-full overflow-x-hidden overflow-y-visible border-b border-slate-100 bg-slate-50/50 py-4 mb-4 mt-2">
+                {/* --- MARQUEE --- */}
+                <div className="md:hidden w-full overflow-hidden bg-slate-50/50 h-16 border-b border-slate-100 touch-none select-none shrink-0">
                   <motion.div
                     animate={{ x: [0, "-50%"] }}
                     transition={{
@@ -155,33 +154,33 @@ export default function Home() {
                       duration: 25,
                       repeat: Infinity,
                     }}
-                    className="flex w-max items-center"
+                    className="flex w-max h-full items-center"
                   >
                     {[...Array(4)].map((_, i) => (
                       <div
                         key={i}
-                        className="flex items-center whitespace-nowrap"
+                        className="flex items-center px-4 h-full whitespace-nowrap"
                       >
-                        <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 mr-2 leading-normal">
+                        <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 mr-2 block">
                           WHY SWIFT POS
                         </span>
-                        <span className="text-xs font-black text-slate-900 mr-2 leading-normal">
+                        <span className="text-xs font-black text-slate-900 mr-2 block">
                           Built for Modern Retail.
                         </span>
-                        <span className="text-xs font-medium text-slate-500 leading-normal">
+                        <span className="text-xs font-medium text-slate-500 block">
                           Everything you need to run, monitor, and grow your
                           store in one powerful platform.
                         </span>
-                        <span className="mx-6 text-slate-300 leading-normal">
-                          ✦
-                        </span>
+                        <span className="mx-8 text-slate-300 block">✦</span>
                       </div>
                     ))}
                   </motion.div>
                 </div>
+                {/* ---------------------------------- */}
 
-                <div className="w-full h-full flex items-center justify-center px-6 md:px-32">
-                  <div className="w-full max-w-md py-2 md:py-0 overflow-y-auto max-h-full pb-20 mobile-no-scrollbar">
+                {/* REVISI: items-start dan pt-8 untuk mobile supaya semua judul form start di garis yang sama rata! */}
+                <div className="w-full h-full flex items-start md:items-center justify-center px-6 md:px-32 pt-8 md:pt-0">
+                  <div className="w-full max-w-md overflow-y-auto max-h-full pb-24 mobile-no-scrollbar">
                     {mode === "login" && (
                       <LoginForm onBack={() => setMode("none")} />
                     )}

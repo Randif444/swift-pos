@@ -60,10 +60,10 @@ export default function LoginForm({ onBack }: { onBack?: () => void }) {
       )}
 
       <div className="space-y-1">
-        <h2 className="text-2xl md:text-3xl font-black tracking-tighter text-slate-900 uppercase">
+        <h2 className="text-2xl md:text-3xl font-black tracking-tighter text-slate-900 uppercase text-center md:text-left">
           Sign in
         </h2>
-        <p className="text-xs md:text-sm text-slate-500 font-medium">
+        <p className="text-xs md:text-sm text-slate-500 font-medium text-center md:text-left">
           Access your store dashboard
         </p>
       </div>
