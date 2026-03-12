@@ -134,22 +134,44 @@ export default function Home() {
                   <div className="w-12 h-1.5 bg-slate-200 rounded-full" />
                 </div>
 
-                <div className="w-full h-full flex items-center justify-center px-6 md:px-32">
-                  <div className="w-full max-w-md py-6 md:py-0 overflow-y-auto max-h-full pb-20">
-                    <div className="md:hidden mb-10">
-                      <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">
-                        WHY SWIFT POS
-                      </p>
-                      <h2 className="text-3xl font-black tracking-tighter text-slate-900 leading-tight">
-                        Built for Modern Retail.
-                      </h2>
-                      <p className="mt-3 text-sm font-medium text-slate-500 leading-relaxed">
-                        Everything you need to run, monitor, and grow your store
-                        in one powerful platform.
-                      </p>
-                    </div>
+                {/* --- BERITA TV MARQUEE KHUSUS MOBILE DENGAN TEKS ASLI --- */}
+                {/* REVISI: overflow-x-hidden overflow-y-visible agar teks tidak terpotong vertikal, dan py-4 untuk ruang napas */}
+                <div className="md:hidden w-full overflow-x-hidden overflow-y-visible border-b border-slate-100 bg-slate-50/50 py-4 mb-4 mt-2">
+                  <motion.div
+                    animate={{ x: [0, "-50%"] }}
+                    transition={{
+                      ease: "linear",
+                      duration: 25,
+                      repeat: Infinity,
+                    }}
+                    className="flex w-max items-center"
+                  >
+                    {[...Array(4)].map((_, i) => (
+                      <div
+                        key={i}
+                        className="flex items-center whitespace-nowrap"
+                      >
+                        <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 mr-2 leading-normal">
+                          WHY SWIFT POS
+                        </span>
+                        <span className="text-xs font-black text-slate-900 mr-2 leading-normal">
+                          Built for Modern Retail.
+                        </span>
+                        <span className="text-xs font-medium text-slate-500 leading-normal">
+                          Everything you need to run, monitor, and grow your
+                          store in one powerful platform.
+                        </span>
+                        <span className="mx-6 text-slate-300 leading-normal">
+                          ✦
+                        </span>
+                      </div>
+                    ))}
+                  </motion.div>
+                </div>
+                {/* -------------------------------------------------------- */}
 
-                    {/* REVISI: Mengembalikan onBack agar tombol kembali bisa menutup modal di layar ini */}
+                <div className="w-full h-full flex items-center justify-center px-6 md:px-32">
+                  <div className="w-full max-w-md py-2 md:py-0 overflow-y-auto max-h-full pb-20 mobile-no-scrollbar">
                     {mode === "login" && (
                       <LoginForm onBack={() => setMode("none")} />
                     )}

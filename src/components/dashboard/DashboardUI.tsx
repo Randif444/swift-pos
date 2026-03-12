@@ -40,11 +40,9 @@ export default function DashboardUI({
   topProducts,
 }: any) {
   return (
-    // REVISI: p-4 untuk mobile agar lega, p-8 untuk desktop
-    <div className="p-4 md:p-8 space-y-6 md:space-y-8 bg-white min-h-screen pb-24 md:pb-8">
+    <div className="p-4 md:p-8 space-y-6 md:space-y-8 bg-white min-h-screen pb-24 md:pb-8 w-full max-w-full overflow-x-hidden">
       <div className="flex items-center justify-between">
         <div>
-          {/* REVISI: text-2xl di mobile agar tidak turun 2 baris */}
           <h2 className="text-2xl md:text-3xl font-black tracking-tighter text-slate-900">
             Good Morning, {tenant?.name || "Users"}
           </h2>
@@ -54,9 +52,8 @@ export default function DashboardUI({
         </div>
       </div>
 
-      <div className="grid gap-4 md:gap-6 md:grid-cols-2 lg:grid-cols-4">
-        {/* Card Revenue */}
-        <Card className="shadow-sm border border-slate-100 bg-white rounded-2xl">
+      <div className="grid gap-4 md:gap-6 md:grid-cols-2 lg:grid-cols-4 w-full">
+        <Card className="shadow-sm border border-slate-100 bg-white rounded-2xl w-full min-w-0">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-[10px] font-black uppercase tracking-widest text-slate-400">
               Revenue Today
@@ -79,8 +76,7 @@ export default function DashboardUI({
           </CardContent>
         </Card>
 
-        {/* Card Total Products */}
-        <Card className="shadow-sm border border-slate-100 bg-white rounded-2xl">
+        <Card className="shadow-sm border border-slate-100 bg-white rounded-2xl w-full min-w-0">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-[10px] font-black uppercase tracking-widest text-slate-400">
               Total Products
@@ -97,8 +93,7 @@ export default function DashboardUI({
           </CardContent>
         </Card>
 
-        {/* Card Transactions */}
-        <Card className="shadow-sm border border-slate-100 bg-white rounded-2xl">
+        <Card className="shadow-sm border border-slate-100 bg-white rounded-2xl w-full min-w-0">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-[10px] font-black uppercase tracking-widest text-slate-400">
               Transactions
@@ -115,8 +110,7 @@ export default function DashboardUI({
           </CardContent>
         </Card>
 
-        {/* Card Stock Status */}
-        <Card className="shadow-sm border border-slate-100 bg-white rounded-2xl">
+        <Card className="shadow-sm border border-slate-100 bg-white rounded-2xl w-full min-w-0">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-[10px] font-black uppercase tracking-widest text-slate-400">
               Stock Status
@@ -137,17 +131,17 @@ export default function DashboardUI({
         </Card>
       </div>
 
-      <div className="grid gap-4 md:gap-6 md:grid-cols-2 lg:grid-cols-7">
-        <Card className="col-span-1 lg:col-span-4 shadow-sm border border-slate-100 bg-white rounded-3xl md:rounded-[2rem] overflow-hidden">
+      <div className="grid gap-4 md:gap-6 md:grid-cols-2 lg:grid-cols-7 w-full">
+        <Card className="col-span-1 lg:col-span-4 shadow-sm border border-slate-100 bg-white rounded-3xl md:rounded-[2rem] overflow-hidden w-full min-w-0">
           <CardHeader>
             <CardTitle className="text-base md:text-lg font-black text-slate-900 tracking-tight">
               Revenue (Last 7 Days)
             </CardTitle>
           </CardHeader>
-          {/* REVISI: Mengurangi padding kiri grafik di mobile agar ruangnya optimal */}
-          <CardContent className="pl-0 md:pl-2">
-            <div className="h-[250px] md:h-[300px]">
-              <ResponsiveContainer width="100%" height="100%">
+
+          <CardContent className="pl-0 md:pl-2 w-full">
+            <div className="h-[250px] md:h-[300px] w-full min-w-0">
+              <ResponsiveContainer width="99%" height="100%">
                 <LineChart data={chartData}>
                   <XAxis
                     dataKey="date"
@@ -156,10 +150,10 @@ export default function DashboardUI({
                     tickLine={false}
                     axisLine={false}
                     tick={{ fill: "#94a3b8" }}
-                    tickFormatter={(val) => val.slice(5)} // Persingkat format tanggal di mobile
+                    tickFormatter={(val) => val.slice(5)}
                   />
                   <YAxis
-                    width={45} // Atur lebar Y-Axis agar tidak memakan ruang
+                    width={45}
                     fontSize={10}
                     fontWeight={700}
                     tickLine={false}
@@ -196,7 +190,7 @@ export default function DashboardUI({
           </CardContent>
         </Card>
 
-        <Card className="col-span-1 lg:col-span-3 shadow-sm border border-slate-100 bg-white rounded-3xl md:rounded-[2rem]">
+        <Card className="col-span-1 lg:col-span-3 shadow-sm border border-slate-100 bg-white rounded-3xl md:rounded-[2rem] w-full min-w-0">
           <CardHeader>
             <CardTitle className="text-base md:text-lg font-black text-slate-900 tracking-tight">
               Top Selling
@@ -235,7 +229,7 @@ export default function DashboardUI({
         </Card>
       </div>
 
-      <Card className="shadow-sm border border-slate-100 bg-white rounded-3xl md:rounded-[2rem]">
+      <Card className="shadow-sm border border-slate-100 bg-white rounded-3xl md:rounded-[2rem] w-full min-w-0">
         <CardHeader>
           <CardTitle className="text-base md:text-lg font-black text-slate-900 tracking-tight">
             Recent Activities
