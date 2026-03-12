@@ -22,10 +22,23 @@ export default function Home() {
     return () => window.removeEventListener("resize", checkSize);
   }, []);
 
+  // REVISI: Mengunci scroll body agar tidak "bocor" saat modal terbuka
+  useEffect(() => {
+    if (mode !== "none" && !isDesktop) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [mode, isDesktop]);
+
   return (
-    <main className="min-h-screen bg-white overflow-x-hidden">
-      <div className="w-full h-screen grid grid-cols-1 md:grid-cols-2">
-        <div className="bg-gradient-to-br from-slate-900 to-slate-950 text-white px-8 md:px-20 py-8 md:py-20 flex flex-col h-[100dvh] md:h-full relative overflow-hidden">
+    // REVISI: Menggunakan min-h-[100dvh] agar pas di layar HP (menghilangkan area putih)
+    <main className="min-h-[100dvh] bg-white overflow-hidden flex flex-col">
+      <div className="w-full flex-1 grid grid-cols-1 md:grid-cols-2">
+        <div className="bg-gradient-to-br from-slate-900 to-slate-950 text-white px-8 md:px-20 py-8 md:py-20 flex flex-col h-[100dvh] md:h-full relative overflow-hidden shrink-0">
           <div className="relative z-[60] inline-block px-4 py-1.5 bg-white/10 rounded-full text-[10px] md:text-xs font-black tracking-widest uppercase self-start">
             Swift POS
           </div>
@@ -134,8 +147,6 @@ export default function Home() {
                   <div className="w-12 h-1.5 bg-slate-200 rounded-full" />
                 </div>
 
-                {/* --- BERITA TV MARQUEE KHUSUS MOBILE DENGAN TEKS ASLI --- */}
-                {/* REVISI: overflow-x-hidden overflow-y-visible agar teks tidak terpotong vertikal, dan py-4 untuk ruang napas */}
                 <div className="md:hidden w-full overflow-x-hidden overflow-y-visible border-b border-slate-100 bg-slate-50/50 py-4 mb-4 mt-2">
                   <motion.div
                     animate={{ x: [0, "-50%"] }}
@@ -168,7 +179,6 @@ export default function Home() {
                     ))}
                   </motion.div>
                 </div>
-                {/* -------------------------------------------------------- */}
 
                 <div className="w-full h-full flex items-center justify-center px-6 md:px-32">
                   <div className="w-full max-w-md py-2 md:py-0 overflow-y-auto max-h-full pb-20 mobile-no-scrollbar">

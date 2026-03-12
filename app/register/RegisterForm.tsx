@@ -69,7 +69,7 @@ function RegisterFormInner({ onBack }: { onBack?: () => void }) {
               name="tenantName"
               required={!isInvited}
               placeholder="Masukkan nama toko"
-              className="w-full h-12 md:h-14 rounded-xl md:rounded-2xl border-2 border-slate-100 px-4 md:px-5 font-bold outline-none focus:border-slate-900 focus:bg-slate-50 transition-all text-sm md:text-base placeholder:text-slate-300"
+              className="w-full h-12 md:h-14 rounded-xl md:rounded-2xl border-2 border-slate-100 px-4 md:px-5 font-bold outline-none focus:border-slate-900 focus:bg-slate-50 transition-all text-base md:text-base placeholder:text-slate-300"
             />
           </div>
         )}
@@ -82,7 +82,7 @@ function RegisterFormInner({ onBack }: { onBack?: () => void }) {
             name="email"
             type="email"
             required
-            className="w-full h-12 md:h-14 rounded-xl md:rounded-2xl border-2 border-slate-100 px-4 md:px-5 font-bold outline-none focus:border-slate-900 focus:bg-slate-50 transition-all text-sm md:text-base placeholder:text-slate-300"
+            className="w-full h-12 md:h-14 rounded-xl md:rounded-2xl border-2 border-slate-100 px-4 md:px-5 font-bold outline-none focus:border-slate-900 focus:bg-slate-50 transition-all text-base md:text-base placeholder:text-slate-300"
             placeholder="nama@gmail.com"
           />
         </div>
@@ -96,7 +96,7 @@ function RegisterFormInner({ onBack }: { onBack?: () => void }) {
             type="password"
             required
             minLength={6}
-            className="w-full h-12 md:h-14 rounded-xl md:rounded-2xl border-2 border-slate-100 px-4 md:px-5 font-bold outline-none focus:border-slate-900 focus:bg-slate-50 transition-all text-sm md:text-base placeholder:text-slate-300"
+            className="w-full h-12 md:h-14 rounded-xl md:rounded-2xl border-2 border-slate-100 px-4 md:px-5 font-bold outline-none focus:border-slate-900 focus:bg-slate-50 transition-all text-base md:text-base placeholder:text-slate-300"
             placeholder="••••••••"
           />
         </div>
