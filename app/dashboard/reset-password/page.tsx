@@ -7,11 +7,15 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 import { Lock, LogOut } from "lucide-react";
 
+// --- FRONTEND LAYER ---
+// Core Page Component Declaration & Local Form State Controls
 export default function ResetPasswordPage() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const supabase = createClient();
 
+  // --- BACKEND LAYER (VIBECODING) ---
+  // Form Submission, Mutation Payload Pipeline & Session Clearance
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
@@ -35,6 +39,8 @@ export default function ResetPasswordPage() {
     }
   };
 
+  // --- FRONTEND LAYER ---
+  // Modal Overlays & Form Management Render View
   return (
     <div className="fixed inset-0 z-[1000] bg-slate-50 md:bg-white flex items-center justify-center p-4 md:p-6 overflow-hidden">
       <div className="w-full max-w-md space-y-8 md:space-y-10 bg-white p-6 md:p-0 rounded-[2rem] md:rounded-none shadow-2xl md:shadow-none animate-in fade-in zoom-in duration-300">

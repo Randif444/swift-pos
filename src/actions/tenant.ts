@@ -4,7 +4,8 @@ import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-
+// --- BACKEND LAYER (VIBECODING) ---
+// Tenant Profiles Settings, Store Creation & Staff Invitation Server Action Pipelines
 export async function updateTenantSettings(formData: FormData) {
   const supabase = await createClient();
   

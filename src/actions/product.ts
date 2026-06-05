@@ -3,6 +3,8 @@
 import { createClient } from '../utils/supabase/server';
 import { revalidatePath } from 'next/cache';
 
+// --- BACKEND LAYER (VIBECODING) ---
+// Product Management, Asset Uploads & Inventory Logs Mutation Action Pipelines
 export async function addProduct(formData: FormData) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();

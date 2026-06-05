@@ -6,6 +6,8 @@ import { registerUser } from "@/actions/auth";
 import { toast } from "sonner";
 import { ArrowLeft, Loader2 } from "lucide-react";
 
+// --- FRONTEND LAYER ---
+// Core UI Interaction, Param Parsers & Store Registration Form Fields
 function RegisterFormInner({ onBack }: { onBack?: () => void }) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -14,6 +16,8 @@ function RegisterFormInner({ onBack }: { onBack?: () => void }) {
   const invitationToken = searchParams.get("invitation");
   const isInvited = !!invitationToken;
 
+  // --- BACKEND LAYER (VIBECODING) ---
+  // Store Account Creation & Server Mutation Payload Pipelines
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
@@ -21,10 +25,8 @@ function RegisterFormInner({ onBack }: { onBack?: () => void }) {
     const email = formData.get("email") as string;
 
     try {
-      // Tangkap response dari Server Action
       const response = await registerUser(formData);
 
-      // Cek apakah server mengembalikan pesan error
       if (response?.error) {
         toast.error(response.error);
       } else if (response?.success) {
@@ -38,6 +40,8 @@ function RegisterFormInner({ onBack }: { onBack?: () => void }) {
     }
   };
 
+  // --- FRONTEND LAYER ---
+  // Local Actions & Inner View Component Presentation
   const handleBackAction = () => {
     if (onBack) {
       onBack();
@@ -121,6 +125,7 @@ function RegisterFormInner({ onBack }: { onBack?: () => void }) {
   );
 }
 
+// Global Streaming Shell Architecture Boundary Wrapper
 export default function RegisterForm({ onBack }: { onBack?: () => void }) {
   return (
     <Suspense

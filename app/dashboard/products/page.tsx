@@ -2,9 +2,13 @@ import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import ProductActions from "./ProductActions";
 
+// --- FRONTEND LAYER ---
+// Core Page Component Declaration
 export default async function ProductsPage() {
   const supabase = await createClient();
 
+  // --- BACKEND LAYER (VIBECODING) ---
+  // Session Authentication & Multi-Tenant Inventory Data Fetching
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -28,6 +32,8 @@ export default async function ProductsPage() {
     .is("deleted_at", null)
     .order("created_at", { ascending: false });
 
+  // --- FRONTEND LAYER ---
+  // Presentational Layout & Stock Management Table Rendering
   return (
     <div className="p-4 md:p-8 space-y-6 md:space-y-8 bg-slate-50 md:bg-white min-h-[100dvh] pb-28 md:pb-8">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-0">

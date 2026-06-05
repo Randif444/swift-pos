@@ -7,12 +7,16 @@ import { toast } from "sonner";
 import { AlertCircle, KeyRound, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
+// --- FRONTEND LAYER ---
+// Core UI Interaction & Authentication States
 export default function LoginForm({ onBack }: { onBack?: () => void }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
   const errorParam = searchParams.get("error");
 
+  // --- BACKEND LAYER (VIBECODING) ---
+  // Sign In Credentials Verification Pipeline
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
@@ -34,6 +38,8 @@ export default function LoginForm({ onBack }: { onBack?: () => void }) {
     }
   };
 
+  // --- FRONTEND LAYER ---
+  // Local Actions & Component Presentational Views
   const handleBackAction = () => {
     if (onBack) {
       onBack();

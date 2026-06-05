@@ -15,6 +15,8 @@ import { UserPlus, Mail, ShieldCheck, Copy, Check } from "lucide-react";
 import { toast } from "sonner";
 import { saveInvitationToken } from "@/actions/tokens";
 
+// --- FRONTEND LAYER ---
+// Core Dialog Component Declaration & State Management
 export default function AddStaffDialog({ tenantId }: { tenantId: string }) {
   const [open, setOpen] = useState(false);
   const [generatedToken, setGeneratedToken] = useState<string | null>(null);
@@ -36,6 +38,8 @@ export default function AddStaffDialog({ tenantId }: { tenantId: string }) {
     return result;
   };
 
+  // --- BACKEND LAYER (VIBECODING) ---
+  // Save Invitation Token Payload Pipeline
   const handleGenerate = async () => {
     if (!email) {
       toast.error("Isi email calon staf dulu, Kang!");
@@ -54,6 +58,8 @@ export default function AddStaffDialog({ tenantId }: { tenantId: string }) {
     }
   };
 
+  // --- FRONTEND LAYER ---
+  // Local Clipboard Handling & Presentation Form Views
   const copyToken = () => {
     if (generatedToken) {
       navigator.clipboard.writeText(generatedToken);

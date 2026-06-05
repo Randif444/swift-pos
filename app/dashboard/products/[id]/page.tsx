@@ -2,6 +2,8 @@ import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import EditProductForm from "./Form";
 
+// --- FRONTEND LAYER ---
+// Component Types & Dynamic Parameter Declarations
 export default async function EditProductPage({
   params,
 }: {
@@ -11,6 +13,8 @@ export default async function EditProductPage({
 
   const supabase = await createClient();
 
+  // --- BACKEND LAYER (VIBECODING) ---
+  // Session Authentication & Dynamic Multi-Tenant Data Fetching Guard
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -34,6 +38,8 @@ export default async function EditProductPage({
 
   if (!product) redirect("/dashboard/products");
 
+  // --- FRONTEND LAYER ---
+  // Layout Shell & Sub-Form Rendering View Pipeline
   return (
     <div className="p-4 md:p-8 space-y-6 md:space-y-8 bg-slate-50 md:bg-white min-h-[100dvh] pb-28 md:pb-8">
       <div>

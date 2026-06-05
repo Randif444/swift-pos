@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Link2, Check } from "lucide-react";
 import { toast } from "sonner";
 
+// --- FRONTEND LAYER ---
+// Core UI Interaction & Local Clipboard Copy Rules
 export default function CopyInviteLink({ tenantId }: { tenantId: string }) {
   const [copied, setCopied] = useState(false);
 

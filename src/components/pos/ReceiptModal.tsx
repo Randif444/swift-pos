@@ -21,6 +21,8 @@ interface ReceiptModalProps {
   tenant: any; // Data branding dari Settings
 }
 
+// --- FRONTEND LAYER ---
+// Local Presentational Document Format Helpers
 function formatCurrency(value: number) {
   return new Intl.NumberFormat("id-ID", {
     style: "currency",
@@ -30,6 +32,7 @@ function formatCurrency(value: number) {
   }).format(value);
 }
 
+// POS Dynamic Thermal Receipt Generator & Native Printer Interface
 export default function ReceiptModal({
   open,
   onOpenChange,
@@ -159,12 +162,14 @@ export default function ReceiptModal({
 
         <div className="flex gap-3 mt-8">
           <button
+            type="button"
             onClick={() => onOpenChange(false)}
             className="flex-1 h-12 md:h-14 border-2 border-slate-100 rounded-xl md:rounded-2xl text-xs font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-all active:scale-95"
           >
             Tutup
           </button>
           <button
+            type="button"
             onClick={handlePrint}
             className="flex-1 h-12 md:h-14 bg-slate-900 text-white rounded-xl md:rounded-2xl text-xs font-black uppercase tracking-widest shadow-xl active:scale-95 transition-all"
           >

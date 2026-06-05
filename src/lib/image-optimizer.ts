@@ -1,4 +1,5 @@
-
+// --- FRONTEND LAYER ---
+// Client-Side Image Compression, Canvas Resizing & Binary Blob Helpers
 export async function optimizeImage(file: File, maxWidth = 500): Promise<File> {
   return new Promise((resolve) => {
     const reader = new FileReader();

@@ -6,6 +6,8 @@ import { updateProduct } from "@/actions/product";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
+// --- FRONTEND LAYER ---
+// Currency Formatting Helper
 function formatCurrency(value: number) {
   return new Intl.NumberFormat("id-ID", {
     style: "currency",
@@ -22,6 +24,8 @@ export default function EditProductForm({ product }: any) {
   const [stock, setStock] = useState(product.stock);
   const [loading, setLoading] = useState(false);
 
+  // --- BACKEND LAYER (VIBECODING) ---
+  // Form Submission Mutation Payload Pipeline
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -46,6 +50,8 @@ export default function EditProductForm({ product }: any) {
     }
   };
 
+  // --- FRONTEND LAYER ---
+  // Dynamic Badge Logic & Component View Layout Rendering
   const stockColor =
     stock === 0
       ? "bg-rose-50 text-rose-600 border-rose-100"

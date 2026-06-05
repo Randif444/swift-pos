@@ -3,17 +3,22 @@ import DashboardUI from "@/components/dashboard/DashboardUI";
 import SetupPopup from "@/components/dashboard/SetupPopup";
 import { redirect } from "next/navigation";
 
+// --- FRONTEND LAYER ---
+// Next.js Page Configurations
 export const revalidate = 0;
 
 export default async function DashboardPage() {
   const supabase = await createClient();
 
+  // --- BACKEND LAYER (VIBECODING) ---
+  // Auth Session Security Guard
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
   if (!user) redirect("/");
 
+  // Fetching Tenant Relations & Profile
   const { data: relations } = await supabase
     .from("tenant_users")
     .select("tenant_id")
@@ -26,6 +31,7 @@ export default async function DashboardPage() {
     ? await supabase.from("tenants").select("*").eq("id", tenantId).single()
     : { data: null };
 
+  // Fetching Aggregated Statistics Data
   const { count: totalProducts } = tenantId
     ? await supabase
         .from("products")
@@ -55,6 +61,7 @@ export default async function DashboardPage() {
         .limit(5)
     : { data: [] };
 
+  // Data Range Calculations (7 Days Rolling Window)
   const todayStart = new Date();
   todayStart.setHours(0, 0, 0, 0);
 
@@ -87,6 +94,7 @@ export default async function DashboardPage() {
     { name: string; qty: number; revenue: number }
   > = {};
 
+  // Financial Analytical Matrix Loop
   recentTransactions?.forEach((trx) => {
     const trxDate = new Date(trx.created_at);
     const dateKey = trxDate.toLocaleDateString("en-CA");
@@ -120,6 +128,7 @@ export default async function DashboardPage() {
     productSales[trx.product_name].revenue += subtotal;
   });
 
+  // Analytics Mapper formatting
   const chartData = Object.entries(revenueMap)
     .map(([date, revenue]) => ({ date, revenue }))
     .sort((a, b) => a.date.localeCompare(b.date));
@@ -134,6 +143,7 @@ export default async function DashboardPage() {
     growthPercentage =
       ((revenueToday - revenueYesterday) / revenueYesterday) * 100;
 
+  // Alerts Fetcher (Low Stock Alert)
   const { data: lowStock } = tenantId
     ? await supabase
         .from("products")
@@ -143,6 +153,8 @@ export default async function DashboardPage() {
         .lte("stock", 5)
     : { data: [] };
 
+  // --- FRONTEND LAYER ---
+  // Passing Calculated State into UI Presentational Dashboard Components
   return (
     <>
       <DashboardUI

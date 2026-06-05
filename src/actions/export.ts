@@ -3,9 +3,13 @@
 import * as XLSX from "xlsx";
 import { createClient } from "@/utils/supabase/client";
 
+// --- FRONTEND LAYER ---
+// Core Spreadsheet Export Utility Function Declaration
 export async function exportTransactionsToExcel() {
   const supabase = createClient();
 
+  // --- BACKEND LAYER (VIBECODING) ---
+  // Auth Session Credentials Fetching & Multi-Tenant Query Pipeline
   const { data: { user } } = await supabase.auth.getUser();
   const tenantId = user?.app_metadata?.tenant_id;
 
@@ -19,7 +23,8 @@ export async function exportTransactionsToExcel() {
 
   if (error || !transactions) return alert("Gagal mengambil data");
 
-  
+  // --- FRONTEND LAYER ---
+  // JSON Sheet Mapping, Worksheet Injection & Local Document Generation File
   const reportData = transactions.map((tx) => ({
     "Waktu": new Date(tx.created_at).toLocaleString("id-ID"),
     "No. Struk": tx.receipt_number,

@@ -3,9 +3,13 @@ import { redirect } from "next/navigation";
 import LoginForm from "./LoginForm";
 import { Suspense } from "react";
 
+// --- FRONTEND LAYER ---
+// Core Page Component Declaration
 export default async function LoginPage() {
   const supabase = await createClient();
 
+  // --- BACKEND LAYER (VIBECODING) ---
+  // Guard Session Authentication & Safe Redirection Pipeline
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -14,6 +18,8 @@ export default async function LoginPage() {
     redirect("/dashboard");
   }
 
+  // --- FRONTEND LAYER ---
+  // Global View Structure & Streaming Asynchronous Component Boundary
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4 md:p-6">
       <div className="w-full max-w-md bg-white p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-200/50">

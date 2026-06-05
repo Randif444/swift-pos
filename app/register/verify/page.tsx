@@ -6,18 +6,18 @@ import { createClient } from "@/utils/supabase/client";
 import { toast } from "sonner";
 import { Mail, Smartphone, Loader2 } from "lucide-react";
 
-// ==============================================================
-// 1. SUB-KOMPONEN: Ini yang mengurus logika dan useSearchParams
-// ==============================================================
+// --- FRONTEND LAYER ---
+// Sub-Component Interaction Handler & Search Parameters Rule
 function VerifyContent() {
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  // Sekarang useSearchParams aman karena dipanggil di dalam Suspense
   const searchParams = useSearchParams();
   const email = searchParams.get("email") || "";
 
+  // --- BACKEND LAYER (VIBECODING) ---
+  // Secure Sign Up OTP Code Token Verification Pipeline
   const handleVerifyOTP = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -38,6 +38,8 @@ function VerifyContent() {
     }
   };
 
+  // --- FRONTEND LAYER ---
+  // Presentation Inner Form Layout Rendering
   return (
     <div className="w-full max-w-md bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-xl text-center space-y-8 animate-in fade-in zoom-in duration-300">
       <div className="h-20 w-20 bg-slate-900 text-white rounded-[2rem] flex items-center justify-center mx-auto shadow-lg">
@@ -78,7 +80,7 @@ function VerifyContent() {
           disabled={loading || code.length < 6}
           className="w-full py-4 rounded-2xl bg-slate-900 text-white font-black uppercase tracking-widest text-xs hover:bg-black disabled:opacity-50 transition-all active:scale-95 shadow-xl"
         >
-          {loading ? "Memverifikasi..." : "Verifikasi Kode"}
+          {loading ? "Memverify..." : "Verifikasi Kode"}
         </button>
       </form>
 
@@ -89,15 +91,10 @@ function VerifyContent() {
   );
 }
 
-// ==============================================================
-// 2. KOMPONEN UTAMA: Diexport dengan pelindung Suspense
-// ==============================================================
+// Global Shell Structure & Streaming Asynchronous Component Boundary
 export default function VerifyPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 p-6">
-      {/* Bungkus VerifyContent dengan Suspense. 
-        Fallback akan muncul sepersekian detik sebelum email dari URL terbaca. 
-      */}
       <Suspense
         fallback={
           <div className="w-full max-w-md bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-xl flex flex-col items-center justify-center gap-4 py-20">

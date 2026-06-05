@@ -3,6 +3,8 @@
 import { FileSpreadsheet } from "lucide-react";
 import { exportTransactionsToExcel } from "@/actions/export";
 
+// --- FRONTEND LAYER ---
+// Core UI Presentation Export Trigger Component
 export default function ExportButton() {
   return (
     <button

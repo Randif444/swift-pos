@@ -1,6 +1,8 @@
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 
+// --- BACKEND LAYER (VIBECODING) ---
+// Secure Server-Side Cookies Session Client Initialization Connection Utility
 export const createClient = async () => {
     const cookieStore = await cookies();
     return createServerClient(

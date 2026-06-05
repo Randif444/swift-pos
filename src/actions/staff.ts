@@ -2,6 +2,8 @@
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 
+// --- BACKEND LAYER (VIBECODING) ---
+// Staff Access Authorization & Status Mutation Server Action Pipelines
 export async function toggleStaffStatus(userId: string, currentStatus: string) {
   const supabase = await createClient();
   const nextStatus = currentStatus === "active" ? "inactive" : "active";

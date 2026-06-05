@@ -8,10 +8,10 @@ import { processCheckout } from "../../../src/actions/transaction";
 import NextImage from "next/image";
 import { useDebounce } from "../../../hooks/useDebounce";
 import { useThrottle } from "../../../hooks/useThrottle";
-
-// REVISI: Import ReceiptModal yang sudah kita buat tadi
 import ReceiptModal from "../../../src/components/pos/ReceiptModal";
 
+// --- FRONTEND LAYER ---
+// Currency Formatting Helper
 function formatCurrency(value: number) {
   return new Intl.NumberFormat("id-ID", {
     style: "currency",
@@ -20,6 +20,16 @@ function formatCurrency(value: number) {
     maximumFractionDigits: 0,
   }).format(value);
 }
+
+// REVISI POSISI: Fungsi helper dipindah ke luar agar bisa diakses oleh handler di dalam POSClient
+const formatInputRibuan = (value: string) => {
+  const nomorMurni = value.replace(/\D/g, "");
+  return nomorMurni.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+};
+
+const bersihkanFormatAngka = (value: string) => {
+  return Number(value.replace(/\./g, "")) || 0;
+};
 
 export default function POSClient({
   products = [],
@@ -37,6 +47,15 @@ export default function POSClient({
 
   const [showReceipt, setShowReceipt] = useState(false);
   const [cashAmount, setCashAmount] = useState<number>(0);
+  const [displayCash, setDisplayCash] = useState<string>("");
+  
+  const handleCashInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputVal = e.target.value;
+    const hasilFormat = formatInputRibuan(inputVal);
+    setDisplayCash(hasilFormat); // Update teks berformat titik ke UI Input
+    setCashAmount(bersihkanFormatAngka(hasilFormat)); // Simpan angka asli ke state kalkulasi internal
+  };
+
   const [isSuccess, setIsSuccess] = useState(false);
   const [finalReceipt, setFinalReceipt] = useState<any>(null);
 
@@ -79,9 +98,11 @@ export default function POSClient({
     setIsSuccess(false);
     setCart([]);
     setCashAmount(0);
+    setDisplayCash(""); // Mengosongkan kembali input setelah transaksi ditutup
     setFinalReceipt(null);
     router.refresh();
   };
+  
 
   const confirmCheckout = useThrottle(async () => {
     if (cart.length === 0) return toast.error("Cart is empty");
@@ -108,7 +129,7 @@ export default function POSClient({
       });
 
       setIsSuccess(true);
-      setShowReceipt(false); // Tutup popup pembayaran
+      setShowReceipt(false);
       toast.success(`Transaction Success!`);
     } catch (error: any) {
       toast.error(error.message);
@@ -372,7 +393,6 @@ export default function POSClient({
         </div>
       )}
 
-      {/* 1. MODAL PEMBAYARAN (Hanya muncul jika belum sukses) */}
       {showReceipt && !isSuccess && (
         <div className="print:hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-[100] p-4">
           <div className="bg-white rounded-[2rem] w-[90vw] md:max-w-[420px] p-6 md:p-8 space-y-5 md:space-y-6 shadow-2xl overflow-hidden border border-slate-100">
@@ -412,10 +432,11 @@ export default function POSClient({
 
               {paymentMethod === "cash" && (
                 <input
-                  type="number"
+                  type="text"
+                  inputMode="numeric"
                   autoFocus
-                  value={cashAmount || ""}
-                  onChange={(e) => setCashAmount(Number(e.target.value))}
+                  value={displayCash}
+                  onChange={handleCashInputChange}
                   className="w-full h-14 md:h-16 border-2 border-slate-100 bg-slate-50 rounded-xl md:rounded-2xl px-4 text-xl md:text-2xl font-black text-center outline-none focus:border-slate-900 focus:bg-white transition-all placeholder:text-slate-300 animate-in fade-in zoom-in-95 duration-200"
                   placeholder="Masukan uang tunai..."
                 />
@@ -448,7 +469,6 @@ export default function POSClient({
         </div>
       )}
 
-      {/* 2. RECEIPT MODAL: Akan otomatis muncul jika transaksi sukses (isSuccess = true) */}
       <ReceiptModal
         open={isSuccess}
         onOpenChange={(val) => {

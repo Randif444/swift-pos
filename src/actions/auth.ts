@@ -3,6 +3,9 @@
 import { createClient } from "../utils/supabase/server";
 import { createAdminClient } from "../utils/supabase/admin";
 
+// --- BACKEND LAYER (VIBECODING) ---
+// Authenticators & Mutation Payload Server Action Pipelines
+
 /* ============================================================
    1. AUTHENTICATION (LOGIN & LOGOUT)
    ============================================================ */

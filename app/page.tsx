@@ -6,6 +6,8 @@ import LoginForm from "./login/LoginForm";
 import RegisterForm from "./register/RegisterForm";
 import InviteForm from "./register/InviteForm";
 
+// --- FRONTEND LAYER ---
+// Core UI State & Animation Configurations
 const easing: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 export default function Home() {
@@ -153,7 +155,7 @@ export default function Home() {
                       ease: "linear",
                       duration: 25,
                       repeat: Infinity,
-                    }}
+                      }}
                     className="flex w-max h-full items-center"
                   >
                     {[...Array(4)].map((_, i) => (
@@ -178,7 +180,6 @@ export default function Home() {
                 </div>
                 {/* ---------------------------------- */}
 
-                {/* REVISI: items-start dan pt-8 untuk mobile supaya semua judul form start di garis yang sama rata! */}
                 <div className="w-full h-full flex items-start md:items-center justify-center px-6 md:px-32 pt-8 md:pt-0">
                   <div className="w-full max-w-md overflow-y-auto max-h-full pb-24 mobile-no-scrollbar">
                     {mode === "login" && (

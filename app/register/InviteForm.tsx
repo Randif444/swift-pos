@@ -6,10 +6,14 @@ import { registerStaff } from "@/actions/auth";
 import { toast } from "sonner";
 import { ArrowLeft } from "lucide-react";
 
+// --- FRONTEND LAYER ---
+// Core UI Interaction & Staff Registration States
 export default function InviteForm({ onBack }: { onBack?: () => void }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
+  // --- BACKEND LAYER (VIBECODING) ---
+  // Staff Token Validation & Registration Pipeline
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
@@ -32,6 +36,8 @@ export default function InviteForm({ onBack }: { onBack?: () => void }) {
     }
   };
 
+  // --- FRONTEND LAYER ---
+  // Local Actions & Component Presentational Views
   const handleBackAction = () => {
     if (onBack) {
       onBack();

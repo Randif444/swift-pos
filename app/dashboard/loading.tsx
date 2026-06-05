@@ -1,3 +1,5 @@
+// --- FRONTEND LAYER ---
+// Global Dashboard Loading Skeleton UI
 export default function Loading() {
   return (
     <div className="p-4 md:p-8 space-y-6 md:space-y-8 bg-slate-50/50 min-h-[100dvh] pb-24 md:pb-8 w-full">

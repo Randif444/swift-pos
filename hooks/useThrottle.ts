@@ -1,5 +1,7 @@
 import { useState, useRef } from "react";
 
+// --- FRONTEND LAYER ---
+// Execution Rate Limiting Controls & Asynchronous Function Throttle Engine
 export function useThrottle<T extends (...args: any[]) => any>(
   callback: T,
   delay: number

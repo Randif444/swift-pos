@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
+// --- FRONTEND LAYER ---
+// Core Presentational Component & Interactive Live Preview State Controls
 export default function SettingsForm({ tenant, user }: any) {
   const [liveName, setLiveName] = useState(tenant?.name || "");
   const [liveAddress, setLiveAddress] = useState(tenant?.address || "");
@@ -33,6 +35,9 @@ export default function SettingsForm({ tenant, user }: any) {
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 items-start">
         <div className="col-span-1 md:col-span-12 lg:col-span-7 space-y-6 md:space-y-8">
+          
+          {/* --- BACKEND LAYER (VIBECODING) --- */}
+          {/* Logo Upload & Storage Asset Mutation Payload Pipeline */}
           <form action={updateTenantSettings}>
             <input type="hidden" name="tenantId" value={tenant?.id || ""} />
             <input
@@ -43,6 +48,7 @@ export default function SettingsForm({ tenant, user }: any) {
 
             <input type="hidden" name="name" value={liveName} />
 
+            {/* --- FRONTEND LAYER --- */}
             <Card className="shadow-sm border border-slate-100 bg-white rounded-[1.5rem] md:rounded-[2rem] overflow-hidden">
               <CardHeader className="p-5 md:p-8 pb-3 md:pb-4">
                 <CardTitle className="text-base md:text-lg font-black text-slate-900 tracking-tight">
@@ -102,6 +108,8 @@ export default function SettingsForm({ tenant, user }: any) {
             </Card>
           </form>
 
+          {/* --- BACKEND LAYER (VIBECODING) --- */}
+          {/* Profile Text Information Mutation Pipeline */}
           <form action={updateTenantSettings}>
             <input type="hidden" name="tenantId" value={tenant?.id || ""} />
 
@@ -111,6 +119,7 @@ export default function SettingsForm({ tenant, user }: any) {
               value={tenant?.logo_url || ""}
             />
 
+            {/* --- FRONTEND LAYER --- */}
             <Card className="shadow-sm border border-slate-100 bg-white rounded-[1.5rem] md:rounded-[2rem] overflow-hidden">
               <CardHeader className="p-5 md:p-8 pb-3 md:pb-4">
                 <CardTitle className="text-base md:text-lg font-black text-slate-900 tracking-tight">
@@ -185,6 +194,7 @@ export default function SettingsForm({ tenant, user }: any) {
             </Card>
           </form>
 
+          {/* Owner Account Card (Frontend) */}
           <Card className="shadow-sm border border-slate-100 bg-white opacity-60 rounded-[1.5rem] md:rounded-[2rem]">
             <CardHeader className="p-5 md:p-8 py-4 md:py-6">
               <CardTitle className="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest">
@@ -198,6 +208,7 @@ export default function SettingsForm({ tenant, user }: any) {
           </Card>
         </div>
 
+        {/* Live Thermal Printer Receipt Simulation Side (Frontend View) */}
         <div className="col-span-1 md:col-span-12 lg:col-span-5 sticky top-4 md:top-8">
           <div className="space-y-3 md:space-y-4">
             <p className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 px-2 md:px-4">

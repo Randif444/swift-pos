@@ -1,9 +1,13 @@
 import { createClient } from "../../../src/utils/supabase/server";
 import POSClient from "./POSClient";
 
+// --- FRONTEND LAYER ---
+// Core Page Component Declaration
 export default async function POSPage() {
   const supabase = await createClient();
 
+  // --- BACKEND LAYER (VIBECODING) ---
+  // Session Authentication & Multi-Tenant Data Fetching Pipeline
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -26,5 +30,7 @@ export default async function POSPage() {
     .eq("id", tenantId)
     .single();
 
+  // --- FRONTEND LAYER ---
+  // Data Stream Pipeline to UI Presentational Layer
   return <POSClient products={products || []} tenant={tenant} />;
 }

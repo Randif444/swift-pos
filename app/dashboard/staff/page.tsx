@@ -4,6 +4,8 @@ import { redirect } from "next/navigation";
 import StaffTable from "./StaffTable";
 import AddStaffDialog from "./AddStaffDialog";
 
+// --- FRONTEND LAYER ---
+// Next.js Global Page Route Configurations
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
 
@@ -11,6 +13,8 @@ export default async function StaffPage() {
   const supabase = await createClient();
   const adminSupabase = createAdminClient();
 
+  // --- BACKEND LAYER (VIBECODING) ---
+  // Session Access Verification & Multi-Tenant Team Security Pipelines
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -42,6 +46,8 @@ export default async function StaffPage() {
     }),
   );
 
+  // --- FRONTEND LAYER ---
+  // Presentational Structure & Interactivity Dialog State Injection
   return (
     <div className="p-4 md:p-8 space-y-6 md:space-y-8 bg-slate-50 md:bg-white min-h-[100dvh] pb-28 md:pb-8">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-5 md:gap-6">

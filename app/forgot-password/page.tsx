@@ -3,10 +3,11 @@
 import { useState } from "react";
 import { forgotPassword } from "@/actions/auth";
 import { toast } from "sonner";
-
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 
+// --- FRONTEND LAYER ---
+// Core Component Declaration & Multi-step Wizard States
 export default function ForgotPasswordPage() {
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState("");
@@ -14,6 +15,8 @@ export default function ForgotPasswordPage() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
+  // --- BACKEND LAYER (VIBECODING) ---
+  // Request Recovery Token Mutation Payload Pipeline
   const handleRequestReset = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
@@ -32,6 +35,7 @@ export default function ForgotPasswordPage() {
     }
   };
 
+  // OTP Verification & Secure Session Transition Validation
   const handleVerifyOTP = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -51,6 +55,8 @@ export default function ForgotPasswordPage() {
     }
   };
 
+  // --- FRONTEND LAYER ---
+  // Split Form Conditional Render Views
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 p-6">
       <div className="w-full max-w-md bg-white p-10 rounded-[2.5rem] shadow-xl space-y-8">

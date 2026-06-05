@@ -1,4 +1,5 @@
 "use client";
+
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -29,6 +30,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
+// --- FRONTEND LAYER ---
+// App Shell Layout Architecture, Navigation Scheme & Responsive Sizing States
 export default function DashboardShell({
   children,
   userEmail,
@@ -48,6 +51,8 @@ export default function DashboardShell({
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
+  // --- BACKEND LAYER (VIBECODING) ---
+  // Session Removal & Access Revocation Pipeline
   const handleLogout = async () => {
     try {
       setIsLoggingOut(true);
@@ -62,6 +67,8 @@ export default function DashboardShell({
     }
   };
 
+  // --- FRONTEND LAYER ---
+  // View Structure Layout Presentational Controls (Desktop Sidebar & Mobile Nav Bar)
   const navigation = [
     {
       group: "OVERVIEW",
@@ -116,14 +123,12 @@ export default function DashboardShell({
     },
   ];
 
-  // Ekstrak semua menu yang diizinkan untuk Bottom Nav di Mobile
   const mobileNavItems = navigation
     .flatMap((section) => section.items)
     .filter((item) => item.roles.includes(role.toLowerCase()));
 
   return (
     <TooltipProvider delayDuration={0}>
-      {/* Container utama diubah jadi flex-col untuk Mobile, dan flex-row untuk Desktop */}
       <div className="flex flex-col md:flex-row h-[100dvh] bg-slate-50 md:bg-white overflow-hidden">
         {/* =========================================
             1. MOBILE TOP HEADER (Hanya Muncul di HP)
@@ -141,7 +146,6 @@ export default function DashboardShell({
                 {userEmail.split("@")[0]}
               </span>
             </div>
-            {/* Tombol Logout pindah ke atas di versi Mobile */}
             <button
               onClick={() => setConfirmOpen(true)}
               className="h-8 w-8 rounded-full bg-red-50 text-red-500 flex items-center justify-center hover:bg-red-100 transition-colors shadow-sm"
@@ -366,7 +370,7 @@ export default function DashboardShell({
 
             <p className="text-sm font-medium text-slate-500 py-6">
               Pastikan semua transaksi kasir sudah tersimpan dengan benar
-              sebelum Anda keluar.
+              belum Anda keluar.
             </p>
 
             <div className="flex gap-4 mt-2">

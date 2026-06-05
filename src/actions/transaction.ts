@@ -3,6 +3,8 @@
 import { revalidatePath } from 'next/cache';
 import { createClient } from '../utils/supabase/server';
 
+// --- BACKEND LAYER (VIBECODING) ---
+// Secure Point-of-Sale Checkout Validation & Atomic RPC Transaction Pipelines
 export async function processCheckout(
   cart: any[],
   paymentMethod: string,
@@ -67,8 +69,10 @@ export async function processCheckout(
     p_receipt_number: receiptNumber
   });
 
-  if (rpcError) throw new Error('Gagal memproses transaksi. Pastikan stok mencukupi.');
-
+if (rpcError) {
+  console.error("Detail Error Supabase:", rpcError);
+  throw new Error(`Detail Error: ${rpcError.message || rpcError.details}`);
+}
   revalidatePath('/dashboard');
   revalidatePath('/dashboard/products');
   revalidatePath('/dashboard/transactions');

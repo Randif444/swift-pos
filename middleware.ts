@@ -2,6 +2,8 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
+// --- BACKEND LAYER (VIBECODING) ---
+// Global HTTP Route Interceptor, Session Validation & Access Control Shield Pipeline
 export async function middleware(req: NextRequest) {
   let res = NextResponse.next();
 
@@ -23,7 +25,7 @@ export async function middleware(req: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser();
   const url = req.nextUrl.clone();
 
- 
+
   if (user) {
   
     const { data: userData } = await supabase

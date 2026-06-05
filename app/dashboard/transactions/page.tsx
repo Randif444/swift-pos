@@ -2,9 +2,13 @@ import { createClient } from "../../../src/utils/supabase/server";
 import { redirect } from "next/navigation";
 import ExportButton from "@/components/transactions/ExportButton";
 
+// --- FRONTEND LAYER ---
+// Next.js Page Configurations
 export default async function TransactionsPage() {
   const supabase = await createClient();
 
+  // --- BACKEND LAYER (VIBECODING) ---
+  // Auth Session Guard & Multi-Tenant Transaction History Fetching Pipelines
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -27,6 +31,8 @@ export default async function TransactionsPage() {
     .eq("tenant_id", tenantId)
     .order("created_at", { ascending: false });
 
+  // --- FRONTEND LAYER ---
+  // Local Data Formatter Helper
   const formatIDR = (amount: number) => {
     return new Intl.NumberFormat("id-ID", {
       style: "currency",
@@ -36,6 +42,7 @@ export default async function TransactionsPage() {
     }).format(amount);
   };
 
+  // Layout Shell Structure & Historic Log Table View Rendering
   return (
     <div className="p-4 md:p-8 space-y-6 md:space-y-8 bg-slate-50 md:bg-white min-h-[100dvh] pb-28 md:pb-8">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6">

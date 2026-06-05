@@ -15,6 +15,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Zap } from "lucide-react";
 
+// --- FRONTEND LAYER ---
+// Core UI Interaction, Sync Effects & Store Data Local States
 export default function SetupPopup({
   tenant: initialTenant,
   role,
@@ -42,6 +44,8 @@ export default function SetupPopup({
     }
   }, [initialTenant, isStaff]);
 
+  // --- BACKEND LAYER (VIBECODING) ---
+  // Store Information Mutation & Initialization Pipeline
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const activeTenantId = initialTenant?.id;
@@ -73,6 +77,8 @@ export default function SetupPopup({
     }
   };
 
+  // --- FRONTEND LAYER ---
+  // Modal Popup Shield View Structure
   if (isStaff) return null;
 
   return (

@@ -18,6 +18,8 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { ShoppingCart, Package, LayoutGrid, TrendingUp } from "lucide-react";
 
+// --- FRONTEND LAYER ---
+// Local Presentational Format Utility Helpers
 function formatCurrency(value: number) {
   return new Intl.NumberFormat("id-ID", {
     style: "currency",
@@ -27,6 +29,7 @@ function formatCurrency(value: number) {
   }).format(value);
 }
 
+// Presentational Layout Structure & Multi-Tenant Analytics Display
 export default function DashboardUI({
   tenant,
   totalProducts,
@@ -60,8 +63,8 @@ export default function DashboardUI({
             </CardTitle>
             <TrendingUp className="h-4 w-4 text-slate-300" />
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">
+          <CardContent >
+            <div className="text-xl sm:text-2xl truncate md:text-3xl font-black text-slate-900 tracking-tight" title={formatCurrency(revenueToday)}>
               {formatCurrency(revenueToday)}
             </div>
             <p

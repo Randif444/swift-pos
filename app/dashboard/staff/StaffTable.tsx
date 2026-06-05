@@ -6,6 +6,8 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 
+// --- FRONTEND LAYER ---
+// Core Table Presentational Component & Interactive Local States
 export default function StaffTable({ staff: initialStaff }: { staff: any[] }) {
   const [mounted, setMounted] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -22,6 +24,8 @@ export default function StaffTable({ staff: initialStaff }: { staff: any[] }) {
     (s) => s.status === "active",
   ).length;
 
+  // --- BACKEND LAYER (VIBECODING) ---
+  // Status Toggling & Dynamic Database Mutations Pipeline
   const handleToggleStatus = async (userId: string, currentStatus: string) => {
     const nextStatus = currentStatus === "inactive" ? "active" : "inactive";
 
@@ -53,6 +57,7 @@ export default function StaffTable({ staff: initialStaff }: { staff: any[] }) {
     });
   };
 
+  // Staff Dismissal & Resource Deletion Pipeline
   const handleDelete = async (userId: string) => {
     if (
       !confirm(
@@ -71,6 +76,8 @@ export default function StaffTable({ staff: initialStaff }: { staff: any[] }) {
     }
   };
 
+  // --- FRONTEND LAYER ---
+  // Presentational Structure & State Badge View Rendering
   if (!mounted) return null;
 
   return (

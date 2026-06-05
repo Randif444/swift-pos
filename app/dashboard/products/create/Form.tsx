@@ -8,6 +8,8 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { ImagePlus, X, Loader2 } from "lucide-react";
 
+// --- FRONTEND LAYER ---
+// Currency Formatting Helper
 function formatCurrency(value: number) {
   return new Intl.NumberFormat("id-ID", {
     style: "currency",
@@ -55,6 +57,8 @@ export default function CreateProductForm() {
     }
   };
 
+  // --- BACKEND LAYER (VIBECODING) ---
+  // Form Submission & Media Append Mutation Pipeline
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -87,6 +91,8 @@ export default function CreateProductForm() {
     }
   };
 
+  // --- FRONTEND LAYER ---
+  // Dynamic Badge Mapping & Product Creation Form Layout View
   const stockStatus =
     stock === 0 ? "Habis" : stock < 5 ? "Stok Tipis" : "Tersedia";
   const stockColor =
@@ -160,7 +166,7 @@ export default function CreateProductForm() {
               <div className="space-y-1 md:space-y-2">
                 <p className="text-[9px] md:text-[10px] text-slate-400 font-bold uppercase leading-relaxed tracking-wider">
                   Saran: Foto Kotak (1:1) <br /> Maksimal 2MB (Akan di-resize
-                  otomatis) [cite: 2026-03-06]
+                  otomatis)
                 </p>
               </div>
             </div>

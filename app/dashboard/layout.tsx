@@ -3,6 +3,8 @@ import DashboardShell from "@/components/layout/DashboardShell";
 import SetupPopup from "@/components/dashboard/SetupPopup";
 import { redirect } from "next/navigation";
 
+// --- FRONTEND LAYER ---
+// Core Layout Definition & Type Declarations
 export default async function DashboardLayout({
   children,
 }: {
@@ -10,6 +12,8 @@ export default async function DashboardLayout({
 }) {
   const supabase = await createClient();
 
+  // --- BACKEND LAYER (VIBECODING) ---
+  // Auth Session Guard & Tenant Relation Security Processing
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -45,6 +49,8 @@ export default async function DashboardLayout({
     tenant = data;
   }
 
+  // --- FRONTEND LAYER ---
+  // Global Shell Rendering & Component State Injection
   return (
     <>
       <DashboardShell

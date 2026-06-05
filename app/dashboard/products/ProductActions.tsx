@@ -1,4 +1,5 @@
 "use client";
+
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -36,6 +37,8 @@ interface ProductActionsProps {
   role: string;
 }
 
+// --- FRONTEND LAYER ---
+// Core Component Declaration & Local UI State Controls
 export default function ProductActions({
   mode,
   product,
@@ -82,6 +85,8 @@ export default function ProductActions({
     }
   };
 
+  // --- BACKEND LAYER (VIBECODING) ---
+  // Form Actions & Server Mutations Payload Pipeline
   const handleMainAction = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -153,6 +158,8 @@ export default function ProductActions({
     }
   };
 
+  // --- FRONTEND LAYER ---
+  // Modal Overlays & Form Management Render View
   return (
     <>
       {mode === "create" ? (

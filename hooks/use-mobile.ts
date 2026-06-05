@@ -1,5 +1,7 @@
 import * as React from "react"
 
+// --- FRONTEND LAYER ---
+// Breakpoint Configurations & Device Detection Engine
 const MOBILE_BREAKPOINT = 768
 
 export function useIsMobile() {
