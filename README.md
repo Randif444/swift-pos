@@ -8,40 +8,49 @@ Swift POS adalah sistem Point of Sale berbasis web yang dirancang khusus untuk m
 
 ## 🚀 Tech Stack Utama
 
-| Kategori | Teknologi |
-|---|---|
-| **Framework** | Next.js (App Router) |
-| **Database & Auth** | Supabase (PostgreSQL + Row Level Security) |
-| **Styling** | Tailwind CSS & Shadcn UI Components |
-| **State & Utilities** | Custom Hooks (`useDebounce`, `useThrottle`), Clsx, Tailwind Merge |
-| **Charts & Visualisasi** | Recharts Analytics |
+| Kategori                 | Teknologi                                                         |
+| ------------------------ | ----------------------------------------------------------------- |
+| **Framework**            | Next.js (App Router)                                              |
+| **Database & Auth**      | Supabase (PostgreSQL + Row Level Security)                        |
+| **Styling**              | Tailwind CSS & Shadcn UI Components                               |
+| **State & Utilities**    | Custom Hooks (`useDebounce`, `useThrottle`), Clsx, Tailwind Merge |
+| **Charts & Visualisasi** | Recharts Analytics                                                |
 
 ---
 
 ## 🛠️ Fitur Unggulan
 
 ### 🏢 Multi-Tenant Architecture
+
 Sistem manajemen terisolasi yang memungkinkan banyak toko/merchant berjalan secara independen dalam satu platform, tanpa interferensi data antar tenant.
 
 ### 💳 Real-Time POS Kasir
-Panel kasir interaktif dengan pencarian produk cerdas berbasis *debounced search* dan pencegahan aksi ganda (*throttled cart action*) untuk pengalaman kasir yang lancar.
+
+Panel kasir interaktif dengan pencarian produk cerdas berbasis _debounced search_ dan pencegahan aksi ganda (_throttled cart action_) untuk pengalaman kasir yang lancar.
 
 ### 💰 Input Nominal Pembayaran Cerdas
-Input kasir secara otomatis menyematkan format titik ribuan Rupiah secara *real-time* untuk mencegah kesalahan input uang tunai.
+
+Input kasir secara otomatis menyematkan format titik ribuan Rupiah secara _real-time_ untuk mencegah kesalahan input uang tunai.
 
 ### 🖨️ Cetak Nota Thermal (58mm)
+
 Generator struk belanja otomatis yang mendukung:
-- Pratinjau langsung di layar (*screen preview*)
+
+- Pratinjau langsung di layar (_screen preview_)
 - Pencetakan fisik ke printer thermal 58mm
 
 ### 📒 Sistem Piutang Member Khusus
+
 Pelacakan utang dan bon belanja yang diikat langsung pada akun member terdaftar — bukan sakelar umum — sesuai alur operasional UMKM terarah.
 
 ### 📊 Ekspor Data Excel
+
 Unduh riwayat mutasi transaksi ke format spreadsheet secara instan dan asinkron.
 
 ### 📦 Manajemen Inventaris & Stok
+
 Notifikasi otomatis berupa badge indikator untuk produk yang menipis:
+
 - 🔴 **Need Restock** — stok di bawah ambang batas
 - 🟢 **Safe Stock** — stok aman
 
@@ -115,10 +124,12 @@ Buka [http://localhost:3000](http://localhost:3000) di browser Anda.
 ## 📝 Catatan Rilis & Pengembangan
 
 ### Pembaruan Input Kasir
+
 Migrasi tipe input pembayaran tunai dari `type="number"` ke `type="text"` dengan pembatasan `inputMode="numeric"` — mendukung visualisasi tanda titik ribuan otomatis tanpa merusak data kalkulasi asli.
 
 ### Optimalisasi Resolusi Layout
-Implementasi pemangkasan teks otomatis (`truncate`) dan font responsif pintar pada kartu analitik harian untuk mencegah angka nominal meluap keluar batas komponen pembungkus (*card overflow*).
+
+Implementasi pemangkasan teks otomatis (`truncate`) dan font responsif pintar pada kartu analitik harian untuk mencegah angka nominal meluap keluar batas komponen pembungkus (_card overflow_).
 
 ---
 
