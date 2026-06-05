@@ -140,5 +140,5 @@ Proyek ini dilisensikan di bawah ketentuan yang berlaku. Lihat file `LICENSE` un
 ---
 
 <p align="center">
-  Dibuat dengan ☕ untuk para pejuang UMKM Indonesia
+  Dibuat dengan ☕ untuk project portfolio, syukur2 kalo bisa bermanfaat. 
 </p>
