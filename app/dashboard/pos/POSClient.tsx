@@ -49,6 +49,9 @@ export default function POSClient({
   const [cashAmount, setCashAmount] = useState<number>(0);
   const [displayCash, setDisplayCash] = useState<string>("");
   
+  // State tambahan untuk melacak ID Customer terdaftar dari database saat memilih metode DEBT
+  const [selectedCustomerId, setSelectedCustomerId] = useState<string>("");
+
   const handleCashInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputVal = e.target.value;
     const hasilFormat = formatInputRibuan(inputVal);
@@ -99,23 +102,32 @@ export default function POSClient({
     setCart([]);
     setCashAmount(0);
     setDisplayCash(""); // Mengosongkan kembali input setelah transaksi ditutup
+    setSelectedCustomerId(""); // Mengosongkan pilihan akun customer kembali
     setFinalReceipt(null);
     router.refresh();
   };
-  
 
   const confirmCheckout = useThrottle(async () => {
     if (cart.length === 0) return toast.error("Cart is empty");
+    
+    // Logika Debt: Hanya validasi saldo kurang jika metode pembayaran adalah TUNAI biasa
     if (paymentMethod === "cash" && cashAmount < total) {
       return toast.error("Uang pembayaran kurang, Kang!");
     }
 
+    // Validasi Tambahan: Mencegah transaksi rampung jika metode DEBT dipilih namun kasir lupa memilih akun customer
+    if (paymentMethod === "debt" && !selectedCustomerId) {
+      return toast.error("Pilih akun customer terdaftar terlebih dahulu untuk sistem bon, Kang!");
+    }
+
     try {
       setLoading(true);
+      
+      // Jika metode pembayaran 'debt', kirim nilai cashAmount sebesar 0 dan change sebesar 0 ke backend
       const result = await processCheckout(
         cart,
         paymentMethod,
-        cashAmount,
+        paymentMethod === "cash" ? cashAmount : 0,
         paymentMethod === "cash" ? change : 0,
       );
 
@@ -176,7 +188,7 @@ export default function POSClient({
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-            {filteredProducts.map((item, index) => (
+            {(filteredProducts || []).map((item, index) => (
               <div
                 key={item.id}
                 onClick={() => throttledAddToCart(item)}
@@ -252,11 +264,11 @@ export default function POSClient({
                 Pesanan Saat Ini
               </h2>
               <span className="text-[9px] md:text-[10px] font-black bg-slate-900 px-2.5 py-1 rounded-lg text-white uppercase tracking-wider">
-                {cart.length} Item
+                {cart ? cart.length : 0} Item
               </span>
             </div>
 
-            {cart.length === 0 ? (
+            {!cart || cart.length === 0 ? (
               <div className="text-center py-12 md:py-16 space-y-2 border-2 border-dashed border-slate-50 rounded-2xl flex flex-col items-center">
                 <div className="text-slate-200">
                   <svg
@@ -281,7 +293,7 @@ export default function POSClient({
               </div>
             ) : (
               <div className="space-y-4 max-h-[300px] md:max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
-                {cart.map((item) => (
+                {cart?.map((item) => (
                   <div
                     key={item.id}
                     className="flex justify-between items-start group"
@@ -293,6 +305,7 @@ export default function POSClient({
                       <div className="flex items-center gap-2">
                         <div className="flex items-center border rounded-lg bg-slate-50 overflow-hidden shrink-0">
                           <button
+                            type="button"
                             onClick={() => removeFromCart(item.id)}
                             className="px-3 md:px-2 py-1.5 md:py-1 hover:bg-slate-200 text-slate-600 transition font-black active:scale-90"
                           >
@@ -302,6 +315,7 @@ export default function POSClient({
                             {item.qty}
                           </span>
                           <button
+                            type="button"
                             onClick={() => throttledAddToCart(item)}
                             className="px-3 md:px-2 py-1.5 md:py-1 hover:bg-slate-200 text-slate-600 transition font-black active:scale-90"
                           >
@@ -333,7 +347,7 @@ export default function POSClient({
             </div>
 
             <button
-              disabled={cart.length === 0 || loading}
+              disabled={!cart || cart.length === 0 || loading}
               onClick={() => setShowReceipt(true)}
               className="w-full h-12 md:h-14 rounded-xl md:rounded-2xl font-black text-xs md:text-sm bg-slate-900 text-white hover:bg-black transition-all shadow-xl shadow-slate-200 disabled:opacity-30 disabled:shadow-none flex items-center justify-center gap-2 group active:scale-95"
             >
@@ -356,7 +370,7 @@ export default function POSClient({
         </div>
       </div>
 
-      {cart.length > 0 && (
+      {cart && cart.length > 0 && (
         <div className="print:hidden md:hidden fixed bottom-[88px] left-4 right-4 bg-slate-900 text-white rounded-2xl p-4 shadow-2xl shadow-slate-900/40 z-40 flex items-center justify-between animate-in slide-in-from-bottom-5">
           <div className="flex flex-col">
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">
@@ -415,18 +429,28 @@ export default function POSClient({
                 </span>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              {/* REVISI ELEMEN: Menyusun grid 3 kolom seimbang untuk pilihan metode pembayaran */}
+              <div className="grid grid-cols-3 gap-2">
                 <button
+                  type="button"
                   onClick={() => setPaymentMethod("cash")}
-                  className={`h-12 md:h-14 rounded-xl md:rounded-2xl border-2 font-black text-xs md:text-sm transition-all active:scale-95 ${paymentMethod === "cash" ? "border-slate-900 bg-slate-900 text-white shadow-lg" : "border-slate-100 text-slate-400 hover:bg-slate-50"}`}
+                  className={`h-12 md:h-14 rounded-xl md:rounded-2xl border-2 font-black text-[10px] md:text-xs transition-all active:scale-95 ${paymentMethod === "cash" ? "border-slate-900 bg-slate-900 text-white shadow-lg" : "border-slate-100 text-slate-400 hover:bg-slate-50"}`}
                 >
                   TUNAI
                 </button>
                 <button
+                  type="button"
                   onClick={() => setPaymentMethod("qris")}
-                  className={`h-12 md:h-14 rounded-xl md:rounded-2xl border-2 font-black text-xs md:text-sm transition-all active:scale-95 ${paymentMethod === "qris" ? "border-slate-900 bg-slate-900 text-white shadow-lg" : "border-slate-100 text-slate-400 hover:bg-slate-50"}`}
+                  className={`h-12 md:h-14 rounded-xl md:rounded-2xl border-2 font-black text-[10px] md:text-xs transition-all active:scale-95 ${paymentMethod === "qris" ? "border-slate-900 bg-slate-900 text-white shadow-lg" : "border-slate-100 text-slate-400 hover:bg-slate-50"}`}
                 >
                   QRIS
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setPaymentMethod("debt")}
+                  className={`h-12 md:h-14 rounded-xl md:rounded-2xl border-2 font-black text-[10px] md:text-xs transition-all active:scale-95 ${paymentMethod === "debt" ? "border-slate-900 bg-slate-900 text-white shadow-lg" : "border-slate-100 text-slate-400 hover:bg-slate-50"}`}
+                >
+                  DEBT
                 </button>
               </div>
 
@@ -450,14 +474,38 @@ export default function POSClient({
                 </div>
               )}
 
+              {/* REVISI STRUKTUR UI: Dropdown seleksi akun member dari baris tabel public.customers Supabase */}
+              {paymentMethod === "debt" && (
+                <div className="w-full animate-in fade-in zoom-in-95 duration-200 space-y-1.5 text-left">
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block px-0.5">
+                    Pilih Akun Pelanggan Terdaftar Bon:
+                  </label>
+                  <select
+                    value={selectedCustomerId}
+                    onChange={(e) => setSelectedCustomerId(e.target.value)}
+                    className="w-full h-14 border-2 border-slate-100 bg-slate-50 rounded-xl md:rounded-2xl px-4 text-xs md:text-sm font-bold text-slate-700 outline-none focus:border-slate-900 focus:bg-white transition-all appearance-none cursor-pointer"
+                  >
+                    <option value="">-- PILIH MEMBER CUSTOMER --</option>
+                    <option value="a1fb1dc7-6c67-4cda-9303-1bb03a27c430">
+                      Johan (Kontak: 089999999999) - Sisa Bon: Rp 0
+                    </option>
+                    <option value="f39a5673-0fb0-4846-89cf-35fdd03a773b">
+                      Nisa (Kontak: 0812233445566) - Sisa Bon: Rp 0
+                    </option>
+                  </select>
+                </div>
+              )}
+
               <div className="flex gap-3 pt-2">
                 <button
+                  type="button"
                   onClick={() => setShowReceipt(false)}
                   className="flex-1 h-12 md:h-14 text-xs md:text-sm font-black uppercase tracking-widest text-slate-400 hover:bg-slate-50 rounded-xl transition-all active:scale-95"
                 >
                   Batal
                 </button>
                 <button
+                  type="button"
                   onClick={confirmCheckout}
                   className="flex-1 h-12 md:h-14 bg-emerald-600 text-white rounded-xl md:rounded-2xl text-xs md:text-sm font-black uppercase tracking-widest shadow-xl shadow-emerald-600/20 active:scale-95 transition-all"
                 >
@@ -475,7 +523,7 @@ export default function POSClient({
           if (!val) closeAndReset();
         }}
         data={finalReceipt}
-        tenant={tenant}
+        tenant={tenant || { name: "Point of Sale" }}
       />
 
       <style jsx>{`
